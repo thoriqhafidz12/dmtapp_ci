@@ -2,19 +2,10 @@
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url('admin') ?>">
-        <img src="img/logo_bpr.jpeg" alt="logo" width="57" height="57">
+        <img src="<?= base_url('img/logo_bpr.jpeg'); ?>" alt="logo" width="57" height="57">
         <div class="sidebar-brand-text mx-3">DMT APPS</div>
     </a>
-
-    <!-- Divider -->
-    <hr class="sidebar-divider my-0">
-
-    <!-- Nav Item - Dashboard -->
-    <li class="nav-item">
-        <a class="nav-link" href="index.html">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span></a>
-    </li>
+    
 
     <!-- MENU DALAM ADMIN -->
     <?php if( in_groups('admin')) : ?>
@@ -46,7 +37,7 @@
     <hr class="sidebar-divider">
 
     <div class="sidebar-heading">
-        ITEM
+        MENU
     </div>
 
     <!-- Nav Item - Pages Collapse Menu -->
@@ -70,9 +61,9 @@
 
     <!-- Nav Item - Tables -->
     <li class="nav-item">
-        <a class="nav-link" href="tables.html">
-            <i class="fas fa-fw fa-table"></i>
-            <span>Tables</span></a>
+        <a class="nav-link" href="<?= base_url('kunjungan/new'); ?>">
+            <i class="fas fa-duotone fa-handshake"></i>
+            <span>Kunjungan Petugas</span></a>
     </li>
 
     <li class="nav-item">

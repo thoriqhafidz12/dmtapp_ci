@@ -1,16 +1,19 @@
 <?= $this->extend('templates/index'); ?>
 
 <?= $this->section("page-content"); ?>
+    <div class="loading-page">
+        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+    </div>
+    <div id="Moduleloader-page" class="jssorl-009-spin">
+        <img src="image/spin.svg" />
+    </div>    
     <div  id="content-wrapper" class="d-flex flex-column">
-
         <!-- Main Content -->
         <div id="content">
             <!-- End of Topbar -->
             <div class="container-fluid">
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-800">HASIL KUNJUNGAN KERJA</h1>
-                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                            class="fas fa-download fa-sm text-white-50"></i> CETAK</a>    
                 </div>
             </div>
             
@@ -51,7 +54,7 @@
                                                     <img src="<base_url('uploads/'.$kunjungan->gambar.'') ?>" alt="">
                                                 </td> -->
                                                 <td>
-                                                    <a href="<?= base_url('kunjungan/'.$kunjungan['id'].'/edit') ?>" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                                    <a href="<?= base_url('/kunjungan/'.$kunjungan['id'].'/edit') ?>" class="btn btn-sm btn-outline-secondary">Edit</a>
                                                     <a href="#" data-href="<?= base_url('kunjungan/'.$kunjungan['id'].'/delete') ?>" onclick="confirmToDelete(this)" class="btn btn-sm btn-outline-danger">Delete</a>
                                                 </td>
                                             </tr>
@@ -79,4 +82,10 @@
             </div>
         </div>
     </div>
+    <script>
+        function confirmToDelete(el){
+            $("#delete-button").attr("href", el.dataset.href);
+            $("#confirm-dialog").modal('show');
+        }
+    </script>
 <?= $this->endSection(); ?>

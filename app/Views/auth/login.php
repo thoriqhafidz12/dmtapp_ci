@@ -1,6 +1,13 @@
+
 <?= $this->extend('auth/templates/index');?>
 
 <?= $this->section('content'); ?>
+    <div class="loading-page">
+        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+    </div>
+    <div id="Moduleloader-page" class="jssorl-009-spin">
+        <img src="image/spin.svg" />
+    </div>
     <div class="container">
 
         <!-- Outer Row -->

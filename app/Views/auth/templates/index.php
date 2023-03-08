@@ -19,6 +19,7 @@
 
     <!-- Custom styles for this template-->
     <link href="<?= base_url();?>css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="<?= base_url();?>css/loading.css" rel="stylesheet">
 
 </head>
     
@@ -35,6 +36,7 @@
 
     <!-- Custom scripts for all pages-->
     <script src="<?= base_url();?>js/sb-admin-2.min.js"></script>
+    <script src="<?= base_url();?>js/loading.js"></script>
 
 </body>
 

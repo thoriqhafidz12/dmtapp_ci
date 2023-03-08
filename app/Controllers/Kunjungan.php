@@ -8,11 +8,13 @@ use CodeIgniter\Exception\PageNotFoundException;
 
 class Kunjungan extends BaseController
 {
+    protected $db, $builder;
+
     public function __construct()
 	{ 
-        helper('form');
-		$this->validation = \Config\Services::validation();
 		$this->kunjungan = new KunjunganModel();
+        $this->db      = \Config\Database::connect();
+        $this->builder = $this->db->table('kunker');
 
 	}
     public function index()
@@ -21,8 +23,7 @@ class Kunjungan extends BaseController
         // $data['kunker'] = $kunjungan->findAll();
 		// echo view('', $data);
         $data['title'] = 'Kunjungan';
-        $kunjungan = new KunjunganModel();
-        $data['kunker'] = $kunjungan->orderBy('id', 'DESC')->findAll();
+        $data['kunker'] = $this->kunjungan->orderBy('id', 'DESC')->findAll();
 
         return view('kunjungan/index' , $data);
     }
@@ -44,9 +45,10 @@ class Kunjungan extends BaseController
     
     public function create()
     {
+        $data['title'] = 'Masukkan Kunjungan';
         // lakukan validasi
         $validation =  \Config\Services::validation();
-        $validation->setRules(['nama_petugas' => 'required']);
+        $validation->setRules(['nama_debitur' => 'required']);
         $isDataValid = $validation->withRequest($this->request)->run();
 
         // jika data valid, simpan ke database
@@ -61,20 +63,22 @@ class Kunjungan extends BaseController
                 "hasil" => $this->request->getPost('hasil'),
                 "gamlap" => $this->request->getPost('gamlap')
             ]);
-            return redirect('kunjungan');
+            return redirect('user');
         }
 		
         // tampilkan form create
-        echo view('kunjungan/index');
+        return view('kunjungan/new',$data);
     }
 
     //--------------------------------------------------------------------------
 
     public function edit($id)
     {
+        $data['title'] = 'Edit Kunjungan';
+        
         // ambil artikel yang akan diedit
-        $kunjungans = new KunjunganModel();
-        $data['kunjungans'] = $kunjungans->where('id', $id)->first();
+        $kunjungan = new KunjunganModel();
+        $data['kunjungan'] = $kunjungan->where('id', $id)->first();
         
         // lakukan validasi data artikel
         $validation =  \Config\Services::validation();
@@ -85,7 +89,7 @@ class Kunjungan extends BaseController
         $isDataValid = $validation->withRequest($this->request)->run();
         // jika data vlid, maka simpan ke database
         if($isDataValid){
-            $kunjungans->update($id, [
+            $kunjungan->update($id, [
                 "tanggal_bertamu" => $this->request->getPost('tanggal_bertamu'),
                 "nama_petugas" => $this->request->getPost('nama_petugas'),
                 "nama_debitur" => $this->request->getPost('nama_debitur'),
@@ -94,11 +98,11 @@ class Kunjungan extends BaseController
                 "hasil" => $this->request->getPost('hasil'),
                 "gamlap" => $this->request->getPost('gamlap')
             ]);
-            return redirect('kunjungan/edit');
+            return redirect('kunjungan/index');
         }
 
         // tampilkan form edit
-        echo view('kunjungan/edit', $data);
+        return view('kunjungan/edit', $data);
     }
 
     //--------------------------------------------------------------------------

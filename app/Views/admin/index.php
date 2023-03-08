@@ -3,7 +3,12 @@
 <?= $this->section("page-content"); ?>
 
 <div class="container-fluid">
-
+    <div class="loading-page">
+        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+    </div>
+    <div id="Moduleloader-page" class="jssorl-009-spin">
+        <img src="image/spin.svg" />
+    </div> 
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800">Users List</h1>
 

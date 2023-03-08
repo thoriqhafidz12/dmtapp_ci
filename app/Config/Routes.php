@@ -37,7 +37,7 @@ $routes->get('/admin/index', 'Admin::index', ['filter' => 'role:admin']);
 $routes->get('/admin/(:num)', 'Admin::detail/$1', ['filter' => 'role:admin']);
 
 $routes->get('kunjungan', 'Kunjungan::index', ['filter' => 'role:admin']);
-$routes->add('kunjungan/new', 'Kunjungan::create', ['filter' => 'role:admin']);
+$routes->add('kunjungan/new', 'Kunjungan::create');
 $routes->add('kunjungan/(:segment)/edit', 'Kunjungan::edit/$1' , ['filter' => 'role:admin']);
 $routes->get('kunjungan/(:segment)/delete', 'Kunjungan::delete/$1' , ['filter' => 'role:admin']);
 

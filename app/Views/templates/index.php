@@ -19,11 +19,13 @@
 
     <!-- Custom styles for this template-->
     <link href="<?= base_url(); ?>css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="<?= base_url();?>css/loading.css" rel="stylesheet">
+    
 
 </head>
 
 <body id="page-top">
-
+    
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -36,6 +38,7 @@
 
             <!-- Main Content -->
             <div id="content">
+                
 
                 <!-- Topbar -->
                 <?= $this->include('templates/topbar'); ?>
@@ -52,7 +55,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>DMT-APPS <?= date('D,M,Y'); ?></span>
+                        <span>DMT-APPS <?= date('d-F-Y'); ?></span>
                     </div>
                 </div>
             </footer>
@@ -103,6 +106,8 @@
     <script src="<?= base_url('/vendor/datatables/dataTables.bootstrap4.min.js')?>"></script>
     <!-- Page level custom scripts -->
     <script src="<?= base_url ('/js/demo/datatables-demo.js')?>"></script>
+    <script src="<?= base_url ('/js/loading.js')?>"></script>
+    <link href="<?= base_url ('img/logo_bpr.jpeg')?>" rel="icon">
 
 </body>
 
