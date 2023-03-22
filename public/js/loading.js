@@ -9,3 +9,6 @@ $(window).on("load", function () {
     $("#Moduleloader-page").fadeOut(30);
    
 });
+$(".navbar").animate({ top: "0px" }, 200);
+$(".navbar-left").animate({ left: "0px" }, 200);
+$(".bottom-slide").animate({ bottom: "0px" }, 200);
