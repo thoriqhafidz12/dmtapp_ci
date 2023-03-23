@@ -31,13 +31,23 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 $routes->get('/', 'User::index');
 $routes->get('/user', 'User::index');
+$routes->get('/user/edit', 'User::edit/$1');
+$routes->match(['get','post'],'/user/save', 'User::save/$1');
 
 $routes->get('/admin', 'Admin::index', ['filter' => 'role:admin']);
 $routes->get('/admin/index', 'Admin::index', ['filter' => 'role:admin']);
 $routes->get('/admin/(:num)', 'Admin::detail/$1', ['filter' => 'role:admin']);
 
-$routes->get('kunjungan', 'Kunjungan::index', ['filter' => 'role:admin']);
-$routes->add('kunjungan/new', 'Kunjungan::create');
+$routes->get('kunjungan', 'Kunjungan::index');
+$routes->get('kunjungan/new', 'Kunjungan::create');
+$routes->match(['get','post'],'kunjungan/save', 'Kunjungan::save');
+$routes->add('kunjungan/(:segment)/edit', 'Kunjungan::edit/$1' , ['filter' => 'role:admin']);
+$routes->get('kunjungan/(:segment)/delete', 'Kunjungan::delete/$1' , ['filter' => 'role:admin']);
+
+$routes->get('/kredit', 'Kredit::index');
+$routes->get('/kredit/(:num)', 'Kredit::detail/$1');
+$routes->get('/kredit/new', 'Kredit::create');
+$routes->match(['get','post'],'kunjungan/save', 'Kunjungan::save');
 $routes->add('kunjungan/(:segment)/edit', 'Kunjungan::edit/$1' , ['filter' => 'role:admin']);
 $routes->get('kunjungan/(:segment)/delete', 'Kunjungan::delete/$1' , ['filter' => 'role:admin']);
 

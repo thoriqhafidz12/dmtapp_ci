@@ -17,7 +17,7 @@
                 </div>
             </div>
             
-            <div class="container-fluid">
+            <div class="container-fluid navbar">
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
                     <div class="card shadow mb-4">
@@ -42,20 +42,20 @@
                                         <?php foreach($kunker as $kunjungan):?>
                                             <tr>
                                                 <td><?= $x++; ?></td>
-                                                <td><?= $kunjungan['tanggal_bertamu'] ?></td>
-                                                <td><?= $kunjungan['nama_petugas'] ?></td>
-                                                <td><?= $kunjungan['nama_debitur'] ?></td>
-                                                <td><?= $kunjungan['alamat'] ?></td>
-                                                <td><?= $kunjungan['tujuan'] ?></td>
-                                                <td><?= $kunjungan['hasil'] ?></td>
-                                                <td><?= $kunjungan['gamlap'] ?></td>
+                                                <td><?= $kunjungan->tanggal_bertamu ?></td>
+                                                <td><?= $kunjungan->nama_petugas ?></td>
+                                                <td><?= $kunjungan->nama_debitur ?></td>
+                                                <td><?= $kunjungan->alamat ?></td>
+                                                <td><?= $kunjungan->tujuan ?></td>
+                                                <td><?= $kunjungan->hasil ?></td>
+                                                <td><img src="<?= base_url('img/kunjungan/'.$kunjungan->gamlap.'') ?>" alt=""></td>
                                                
                                                 <!-- <td>
                                                     <img src="<base_url('uploads/'.$kunjungan->gambar.'') ?>" alt="">
                                                 </td> -->
                                                 <td>
-                                                    <a href="<?= base_url('/kunjungan/'.$kunjungan['id'].'/edit') ?>" class="btn btn-sm btn-outline-secondary">Edit</a>
-                                                    <a href="#" data-href="<?= base_url('kunjungan/'.$kunjungan['id'].'/delete') ?>" onclick="confirmToDelete(this)" class="btn btn-sm btn-outline-danger">Delete</a>
+                                                    <a href="<?= base_url('kunjungan/'.$kunjungan->id.'/edit') ?>" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                                    <a href="#" data-href="<?= base_url('kunjungan/'.$kunjungan->id.'/delete') ?>" onclick="confirmToDelete(this)" class="btn btn-sm btn-outline-danger">Delete</a>
                                                 </td>
                                             </tr>
                                         <?php endforeach ?>

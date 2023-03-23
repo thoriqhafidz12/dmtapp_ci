@@ -2,7 +2,7 @@
 
 <?= $this->section("page-content"); ?>
 
-<div class="container-fluid">
+<div class="container-fluid navbar-left">
 
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800">Users Detail</h1>

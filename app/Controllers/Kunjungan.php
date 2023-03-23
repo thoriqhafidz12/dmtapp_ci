@@ -8,13 +8,10 @@ use CodeIgniter\Exception\PageNotFoundException;
 
 class Kunjungan extends BaseController
 {
-    protected $db, $builder;
 
     public function __construct()
 	{ 
 		$this->kunjungan = new KunjunganModel();
-        $this->db      = \Config\Database::connect();
-        $this->builder = $this->db->table('kunker');
 
 	}
     public function index()
@@ -46,29 +43,51 @@ class Kunjungan extends BaseController
     public function create()
     {
         $data['title'] = 'Masukkan Kunjungan';
-        // lakukan validasi
-        $validation =  \Config\Services::validation();
-        $validation->setRules(['nama_debitur' => 'required']);
-        $isDataValid = $validation->withRequest($this->request)->run();
-
-        // jika data valid, simpan ke database
-        if($isDataValid){
-            $kunjungans = new KunjunganModel();
-            $kunjungans->insert([
-                "tanggal_bertamu" => $this->request->getPost('tanggal_bertamu'),
-                "nama_petugas" => $this->request->getPost('nama_petugas'),
-                "nama_debitur" => $this->request->getPost('nama_debitur'),
-                "alamat" => $this->request->getPost('alamat'),
-                "tujuan" => $this->request->getPost('tujuan'),
-                "hasil" => $this->request->getPost('hasil'),
-                "gamlap" => $this->request->getPost('gamlap')
-            ]);
-            return redirect('user');
-        }
-		
-        // tampilkan form create
         return view('kunjungan/new',$data);
     }
+    //-------simpan kunjungan-----
+    public function save()
+	{
+        $data['title'] = 'Masukkan Kunjungan';
+		if (!$this->validate([
+			'gamlap' => [
+				'rules' => 'uploaded[gamlap]|mime_in[gamlap,image/jpg,image/jpeg,image/gif,image/png]|max_size[gamlap,4048]',
+				'errors' => [
+					'uploaded' => 'Harus Ada Foto yang diupload',
+					'mime_in' => 'File Extention Harus Berupa jpg,jpeg,gif,png',
+					'max_size' => 'Ukuran Foto Maksimal 4 MB'
+				]
+			]
+		])) 
+        {
+			session()->setFlashdata('error', $this->validator->listErrors());
+			return redirect()->back()->withInput();
+		}
+
+		$datagamlap = $this->request->getFile('gamlap');
+        
+		$fileName = $datagamlap->getRandomName();
+		$this->kunjungan->insert([
+            "id_petugas" => $this->request->getPost('id_petugas'),
+			"tanggal_bertamu" => $this->request->getPost('tanggal_bertamu'),
+            "nama_petugas" => $this->request->getPost('nama_petugas'),
+            "nama_debitur" => $this->request->getPost('nama_debitur'),
+            "alamat" => $this->request->getPost('alamat'),
+            "tujuan" => $this->request->getPost('tujuan'),
+            "hasil" => $this->request->getPost('hasil'),
+            'gamlap' => $fileName
+		]);
+        $image = \Config\Services::image()
+            ->withFile($datagamlap)
+            ->convert(IMAGETYPE_PNG)
+            ->resize(400, 200, true, 'height')
+            ->save(FCPATH .'/img/kunjungan/'. $fileName,100);
+		// $datagamlap->move('uploads/kunjungan/', $fileName);
+		session()->setFlashdata('success', 'Terimakasih Telah Mengisi daftar kunjungan');
+		return redirect()->to(base_url('kunjungan/new'));
+
+        
+	}
 
     //--------------------------------------------------------------------------
 
@@ -77,28 +96,25 @@ class Kunjungan extends BaseController
         $data['title'] = 'Edit Kunjungan';
         
         // ambil artikel yang akan diedit
-        $kunjungan = new KunjunganModel();
-        $data['kunjungan'] = $kunjungan->where('id', $id)->first();
+        $data['kunker'] = $this->kunjungan->where('id', $id)->first();
         
         // lakukan validasi data artikel
         $validation =  \Config\Services::validation();
         $validation->setRules([
-            'id' => 'required',
-            'nama_petugas' => 'required'
+            'nama_debitur' => 'required'
         ]);
         $isDataValid = $validation->withRequest($this->request)->run();
         // jika data vlid, maka simpan ke database
         if($isDataValid){
-            $kunjungan->update($id, [
-                "tanggal_bertamu" => $this->request->getPost('tanggal_bertamu'),
-                "nama_petugas" => $this->request->getPost('nama_petugas'),
+            $this->kunjungan->update($id, [
+                
                 "nama_debitur" => $this->request->getPost('nama_debitur'),
                 "alamat" => $this->request->getPost('alamat'),
                 "tujuan" => $this->request->getPost('tujuan'),
                 "hasil" => $this->request->getPost('hasil'),
                 "gamlap" => $this->request->getPost('gamlap')
             ]);
-            return redirect('kunjungan/index');
+            return redirect('kunjungan');
         }
 
         // tampilkan form edit
@@ -112,5 +128,4 @@ class Kunjungan extends BaseController
         $kunjungans->delete($id);
         return redirect('kunjungan');
     }
-
 }

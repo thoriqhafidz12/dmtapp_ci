@@ -8,7 +8,7 @@
     <div id="Moduleloader-page" class="jssorl-009-spin">
         <img src="image/spin.svg" />
     </div>
-    <div class="container">
+    <div class="container bottom-slide">
 
         <!-- Outer Row -->
         <div class="row justify-content-center">
@@ -22,9 +22,9 @@
                             <div class="col-lg">
                                 <div class="p-5">
                                     <div class="text-center">
+                                        <img class="mb-4" src="<?= base_url('img/logo_bpr.jpeg'); ?>" alt="LOGO" style="width:100px">
                                         <h1 class="h4 text-gray-900 mb-4 "><?=lang('Auth.loginTitle')?></h1>
                                     </div>
-
                                     <?= view('Myth\Auth\Views\_message_block') ?>
 
                                     <form action="<?= url_to('login') ?>" method="post" class="user">
@@ -62,7 +62,7 @@
                                         </div>
                                         <?php endif; ?>
                                         
-                                        <button type="submit" class="btn btn-primary btn-user btn-block"><?=lang('Auth.loginAction')?></button>
+                                        <button type="submit" class="btn btn-outline-primary btn-user btn-block "><?=lang('Auth.loginAction')?></button>
 
                                     </form>
                                     <div class="text-center">
