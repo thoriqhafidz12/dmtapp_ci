@@ -70,14 +70,14 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group last mb-3">
-                                    <label>Foto</label>
-                                    <input type="file" class="form-control" name="gamlap">
+                                    <label for ="formFile" class="form-label">Foto</label>
+                                    <input type="file" class="form-control" id="formFile" name="gamlap">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="d-flex mb-5 mt-4 align-items-center">
                                     <div class="d-flex align-items-center"><input type="checkbox" required/>
-                                    <label class="control control--checkbox mb-0"><span class="caption">Saya telah mengisi data diatas dengan benar</a>.</span>
+                                    <label class="control control--checkbox mb-0 ml-2"><span class="caption">Saya telah mengisi data diatas dengan benar</a>.</span>
                                     
                                     <div class="control__indicator"></div>
                                     </label>

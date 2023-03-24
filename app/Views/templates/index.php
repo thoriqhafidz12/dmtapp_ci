@@ -20,6 +20,7 @@
     <!-- Custom styles for this template-->
     <link href="<?= base_url(); ?>css/sb-admin-2.min.css" rel="stylesheet">
     <link href="<?= base_url();?>css/loading.css" rel="stylesheet">
+    
 </head>
 
 <body id="page-top">
@@ -105,7 +106,8 @@
     <!-- Page level custom scripts -->
     <script src="<?= base_url ('/js/demo/datatables-demo.js')?>"></script>
     <script src="<?= base_url ('/js/loading.js')?>"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
     <link href="<?= base_url ('img/logo_bpr.jpeg')?>" rel="icon">
 
 </body>
