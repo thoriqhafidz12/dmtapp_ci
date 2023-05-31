@@ -6,7 +6,7 @@ class User extends BaseController
 {
     public function __construct()
 	{ 
-		$this->kunjungan = new UsersModel();
+		$this->user = new UsersModel();
         $this->db      = \Config\Database::connect();
         $this->builder = $this->db->table('users');
 
@@ -16,13 +16,14 @@ class User extends BaseController
         $data['title'] = 'My Profile';
         return view('user/index', $data);
     }
-    public function edit($id = 0){
+    public function edit($id){
+		$user = new UsersModel();
         $data['title'] = 'Edit profile';
 
         return view('user/edit', $data);
     }
 
-    public function save($id)
+    public function save()
 	{
         $this->builder = $this->db->table('users');
         $data['title'] = 'Edit Profile';
@@ -45,7 +46,7 @@ class User extends BaseController
 		$datafoto = $this->request->getFile('user_image');
         
 		$fileName = $datafoto->getRandomName();
-		$fotouser->update($id,[
+		$fotouser->update('id',[
             "username" => $this->request->getPost('username'),
             "fullname" => $this->request->getPost('fullname'),
 			"user_image" => $fileName
@@ -56,8 +57,6 @@ class User extends BaseController
             // ->resize(400, 200, true, 'height')
             ->save(FCPATH .'/uploads/foto/'. $fileName,100);
 		session()->setFlashdata('success', 'FOTO Berhasil diupload');
-		return redirect()->to(base_url('user'));
-
-        
+		return redirect()->to(base_url('user',$data));
 	}
 }

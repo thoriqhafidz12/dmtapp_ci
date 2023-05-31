@@ -60,7 +60,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="<?= base_url('kredit/new'); ?>">
+            <a class="nav-link" href="<?= base_url('kredit/pendaftaran'); ?>">
                 <i class="fas fa-money-check-alt"></i>  
                 <span>Pendaftaran Kredit</span></a>
         </li>

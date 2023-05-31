@@ -206,6 +206,12 @@ class Mimes
             'image/jpeg',
             'image/pjpeg',
         ],
+        'heic' 	=>	[
+            'image/heic','image/heif','heif/heic',
+        ],
+	    'heif' 	=>	[
+            'image/heic','image/heif',
+        ],
         'jp2' => [
             'image/jp2',
             'video/mj2',

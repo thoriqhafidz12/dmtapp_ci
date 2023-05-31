@@ -22,57 +22,56 @@
                 <div class="card shadow mb-4">
                     <div class="card shadow mb-4">
                         <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
+                            <table class="table table-responsive" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Tanggal Bertamu</th>
+                                        <th>Nama Petugas</th>
+                                        <th>Nama Debitur</th>
+                                        <th>Alamat</th>
+                                        <th>Tujuan</th>
+                                        <th>Hasil</th>
+                                        <th>Foto</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php $x=1; ?>
+                                    <?php foreach($kunker as $kunjungan):?>
                                         <tr>
-                                            <th>No</th>
-                                            <th>Tanggal Bertamu</th>
-                                            <th>Nama Petugas</th>
-                                            <th>Nama Debitur</th>
-                                            <th>Alamat</th>
-                                            <th>Tujuan</th>
-                                            <th>Hasil</th>
-                                            <th>Foto</th>
-                                            <th></th>
+                                            <td><?= $x++; ?></td>
+                                            <td><?= $kunjungan->tanggal_bertamu ?></td>
+                                            <td><?= $kunjungan->nama_petugas ?></td>
+                                            <td><?= $kunjungan->nama_debitur ?></td>
+                                            <td><?= $kunjungan->alamat ?></td>
+                                            <td><?= $kunjungan->tujuan ?></td>
+                                            <td><?= $kunjungan->hasil ?></td>
+                                            <td><img src="<?= base_url('img/kunjungan/'.$kunjungan->gamlap.'') ?>" alt="" style="width: 250px;"></td>
+                                            
+                                            <!-- <td>
+                                                <img src="<base_url('uploads/'.$kunjungan->gambar.'') ?>" alt="">
+                                            </td> -->
+                                            <td>
+                                                <a href="<?= base_url('kunjungan/'.$kunjungan->id.'/edit') ?>" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                                <a href="#" data-href="<?= base_url('kunjungan/'.$kunjungan->id.'/delete') ?>" onclick="confirmToDelete(this)" class="btn btn-sm btn-outline-danger">Delete</a>
+                                            </td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php $x=1; ?>
-                                        <?php foreach($kunker as $kunjungan):?>
-                                            <tr>
-                                                <td><?= $x++; ?></td>
-                                                <td><?= $kunjungan->tanggal_bertamu ?></td>
-                                                <td><?= $kunjungan->nama_petugas ?></td>
-                                                <td><?= $kunjungan->nama_debitur ?></td>
-                                                <td><?= $kunjungan->alamat ?></td>
-                                                <td><?= $kunjungan->tujuan ?></td>
-                                                <td><?= $kunjungan->hasil ?></td>
-                                                <td><img src="<?= base_url('img/kunjungan/'.$kunjungan->gamlap.'') ?>" alt=""></td>
-                                               
-                                                <!-- <td>
-                                                    <img src="<base_url('uploads/'.$kunjungan->gambar.'') ?>" alt="">
-                                                </td> -->
-                                                <td>
-                                                    <a href="<?= base_url('kunjungan/'.$kunjungan->id.'/edit') ?>" class="btn btn-sm btn-outline-secondary">Edit</a>
-                                                    <a href="#" data-href="<?= base_url('kunjungan/'.$kunjungan->id.'/delete') ?>" onclick="confirmToDelete(this)" class="btn btn-sm btn-outline-danger">Delete</a>
-                                                </td>
-                                            </tr>
-                                        <?php endforeach ?>
-                                    </tbody>
-                                </table>
-                                <div id="confirm-dialog" class="modal" tabindex="-1" role="dialog">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                        <div class="modal-body">
-                                            <h2 class="h2">Are you sure?</h2>
-                                            <p>The data will be deleted and lost forever</p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <a href="#" role="button" id="delete-button" class="btn btn-danger">Delete</a>
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                        </div>
-                                        </div>
+                                    <?php endforeach ?>
+                                </tbody>
+                            </table>
+                            
+                            <div id="confirm-dialog" class="modal" tabindex="-1" role="dialog">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                    <div class="modal-body">
+                                        <h2 class="h2">Are you sure?</h2>
+                                        <p>The data will be deleted and lost forever</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="#" role="button" id="delete-button" class="btn btn-danger">Delete</a>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    </div>
                                     </div>
                                 </div>
                             </div>

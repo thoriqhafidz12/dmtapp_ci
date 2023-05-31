@@ -32,7 +32,7 @@ $routes->set404Override();
 $routes->get('/', 'User::index');
 $routes->get('/user', 'User::index');
 $routes->get('/user/edit', 'User::edit/$1');
-$routes->match(['get','post'],'/user/save', 'User::save/$1');
+$routes->match(['get','post'],'/user/save', 'User::save');
 
 $routes->get('/admin', 'Admin::index', ['filter' => 'role:admin']);
 $routes->get('/admin/index', 'Admin::index', ['filter' => 'role:admin']);
@@ -45,11 +45,21 @@ $routes->add('kunjungan/(:segment)/edit', 'Kunjungan::edit/$1' , ['filter' => 'r
 $routes->get('kunjungan/(:segment)/delete', 'Kunjungan::delete/$1' , ['filter' => 'role:admin']);
 
 $routes->get('/kredit', 'Kredit::index');
+$routes->add('kredit/(:segment)/nxtSurvey', 'Kredit::nxtSurvey/$1', ['filter' => 'role:admin']);
+$routes->add('kredit/(:segment)/nxtAnalisa', 'Kredit::nxtAnalisa/$1', ['filter' => 'role:admin']);
+$routes->add('kredit/(:segment)/nxtKomite', 'Kredit::nxtKomite/$1', ['filter' => 'role:admin']);
+$routes->add('kredit/(:segment)/nxtRealisasi', 'Kredit::nxtRealisasi/$1', ['filter' => 'role:admin']);
+$routes->get('/kredit/registrasi', 'Kredit::registrasi');
+$routes->get('/kredit/survey', 'Kredit::survey');
+$routes->get('/kredit/analisa', 'Kredit::analisa');
+$routes->get('/kredit/komite', 'Kredit::komite');
+$routes->get('/kredit/realisasi', 'Kredit::realisasi');
 $routes->get('/kredit/(:num)', 'Kredit::detail/$1');
-$routes->get('/kredit/new', 'Kredit::create');
-$routes->match(['get','post'],'kunjungan/save', 'Kunjungan::save');
-$routes->add('kunjungan/(:segment)/edit', 'Kunjungan::edit/$1' , ['filter' => 'role:admin']);
-$routes->get('kunjungan/(:segment)/delete', 'Kunjungan::delete/$1' , ['filter' => 'role:admin']);
+$routes->get('/kredit/(:num)/cetak', 'Kredit::cetak/$1');
+$routes->get('/kredit/pendaftaran', 'Kredit::viewCreate');
+$routes->match(['get','post'],'kredit/create', 'Kredit::create');
+$routes->add('kredit/(:segment)/edit', 'Kredit::edit/$1', ['filter' => 'role:admin']);
+$routes->get('kredit/(:segment)/delete', 'Kredit::delete/$1' , ['filter' => 'role:admin']);
 
 
 /*
