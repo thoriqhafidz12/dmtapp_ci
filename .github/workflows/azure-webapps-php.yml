@@ -25,9 +25,9 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_NAME: your-app-name    # set this to your application's name
-  AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
-  PHP_VERSION: '8.x'                  # set this to the PHP version to use
+  AZURE_WEBAPP_NAME: dmt_apps   # set this to your application's name
+  AZURE_WEBAPP_PACKAGE_PATH: '../app/Config/Paths.php'      # set this to the path to your web app project, defaults to the repository root
+  PHP_VERSION: '8.0'                  # set this to the PHP version to use
 
 permissions:
   contents: read
@@ -38,12 +38,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-
+    
       - name: Setup PHP
         uses: shivammathur/setup-php@7c0b4c8c8ebed23eca9ec2802474895d105b11bc
         with:
           php-version: ${{ env.PHP_VERSION }}
-
+          
       - name: Check if composer.json exists
         id: check_files
         uses: andstor/file-existence-action@87d74d4732ddb824259d80c8a508c0124bf1c673
