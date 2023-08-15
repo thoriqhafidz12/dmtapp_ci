@@ -9,11 +9,11 @@ on:
 
 jobs:
   composer:
-    uses: kawax/composer-workflow/.github/workflows/update.yml@v1
+    uses: dmapp_ci/.github/workflows/update-composer.yml@master
     secrets:
       token: ${{ secrets.ACTION_TOKEN }}
     with:
       git-name: thoriqhafidz12
       git-email: 111201911729@mhs.dinus.ac.id
       composer-path: ./composer
-      branch: composer-update-v1
+      branch: master
