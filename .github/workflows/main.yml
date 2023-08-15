@@ -1,16 +1,18 @@
-name: Coding Standards
+name: Automatic Code Review
 
 on:
-  push:
-    paths:
-      - '**.php'
-      - 'spark'
-      - '.github/workflows/test-coding-standards.yml'
   pull_request:
     paths:
+      - composer.json
+      - spark
       - '**.php'
-      - 'spark'
-      - '.github/workflows/test-coding-standards.yml'
+      - .github/workflows/test-autoreview.yml
+  push:
+    paths:
+      - composer.json
+      - spark
+      - '**.php'
+      - .github/workflows/test-autoreview.yml
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
@@ -20,17 +22,17 @@ permissions:
   contents: read
 
 jobs:
-  lint:
-    name: PHP ${{ matrix.php-version }} Lint with PHP CS Fixer
-    runs-on: ubuntu-22.04
+  auto-review-tests:
+    uses: ./.github/workflows/reusable-serviceless-phpunit-test.yml # @TODO Extract to codeigniter4/.github repo
+    with:
+      job-name: Automatic Code Review [PHP 8.1]
+      php-version: '8.1'
+      job-id: auto-review-tests
+      group-name: AutoReview
 
-    strategy:
-      fail-fast: false
-      matrix:
-        php-version:
-          - '7.4'
-          - '8.0'
-
+  composer-normalize-tests:
+    name: Check normalized composer.json
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -38,30 +40,68 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php-version }}
-          extensions: tokenizer
-          coverage: none
-
-      - name: Get composer cache directory
-        run: echo "COMPOSER_CACHE_FILES_DIR=$(composer config cache-files-dir)" >> $GITHUB_ENV
-
-      - name: Cache dependencies
-        uses: actions/cache@v3
-        with:
-          path: ${{ env.COMPOSER_CACHE_FILES_DIR }}
-          key: ${{ runner.os }}-${{ matrix.php-version }}-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ matrix.php-version }}-
-            ${{ runner.os }}-
+          php-version: '8.1'
 
       - name: Install dependencies
-        run: composer update --ansi --no-interaction
+        run: composer update
 
-      - name: Run lint on `app/`, `admin/`, `public/`
-        run: vendor/bin/php-cs-fixer fix --verbose --ansi --dry-run --config=.php-cs-fixer.no-header.php --using-cache=no --diff
+      - name: Run on root composer.json
+        id: normalize-root-composer
+        if: ${{ always() }}
+        run: |
+          echo "ROOT_COMPOSER_RESULT<<RCR" >> $GITHUB_OUTPUT
+          echo "$(composer normalize)" >> $GITHUB_OUTPUT
+          echo "RCR" >> $GITHUB_OUTPUT
 
-      - name: Run lint on `system/`, `tests`, `utils/`, and root PHP files
-        run: vendor/bin/php-cs-fixer fix --verbose --ansi --dry-run --using-cache=no --diff
+      - name: Run on framework composer.json
+        id: normalize-framework-composer
+        if: ${{ always() }}
+        working-directory: admin/framework
+        run: |
+          echo "FRAMEWORK_COMPOSER_RESULT<<FCR" >> $GITHUB_OUTPUT
+          echo "$(composer normalize)" >> $GITHUB_OUTPUT
+          echo "FCR" >> $GITHUB_OUTPUT
 
-      - name: Run lint on `user_guide_src/source/`
-        run: vendor/bin/php-cs-fixer fix --verbose --ansi --dry-run --config=.php-cs-fixer.user-guide.php --using-cache=no --diff
+      - name: Run on starter composer.json
+        id: normalize-starter-composer
+        if: ${{ always() }}
+        working-directory: admin/starter
+        run: |
+          echo "STARTER_COMPOSER_RESULT<<SCR" >> $GITHUB_OUTPUT
+          echo "$(composer normalize)" >> $GITHUB_OUTPUT
+          echo "SCR" >> $GITHUB_OUTPUT
+
+      - name: Analyse normalization results
+        run: |
+          if [[ '${{ steps.normalize-root-composer.conclusion }}' == 'failure' ]]; then
+            echo 'Normalization of root composer.json encountered a problem.';
+            echo 'Please run it locally: `composer normalize`';
+            exit 1;
+          fi
+
+          if [[ ${{ contains(steps.normalize-root-composer.outputs.ROOT_COMPOSER_RESULT, 'Successfully normalized') }} == true ]]; then
+            echo 'Root composer.json is not yet normalized.';
+            exit 1;
+          fi
+
+          if [[ '${{ steps.normalize-framework-composer.conclusion }}' == 'failure' ]]; then
+            echo 'Normalization of framework composer.json encountered a problem.';
+            echo 'Please run it locally: `composer normalize -d admin/framework`';
+            exit 1;
+          fi
+
+          if [[ ${{ contains(steps.normalize-framework-composer.outputs.FRAMEWORK_COMPOSER_RESULT, 'Successfully normalized') }} == true ]]; then
+            echo 'Framework composer.json is not yet normalized.';
+            exit 1;
+          fi
+
+          if [[ '${{ steps.normalize-starter-composer.conclusion }}' == 'failure' ]]; then
+            echo 'Normalization of starter composer.json encountered a problem.';
+            echo 'Please run it locally: `composer normalize -d admin/starter`';
+            exit 1;
+          fi
+
+          if [[ ${{ contains(steps.normalize-starter-composer.outputs.STARTER_COMPOSER_RESULT, 'Successfully normalized') }} == true ]]; then
+            echo 'Starter composer.json is not yet normalized.';
+            exit 1;
+          fi
