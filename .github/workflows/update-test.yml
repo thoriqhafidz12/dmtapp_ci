@@ -1,19 +1,20 @@
-name: test
+name: composer update
 
 on:
   schedule:
     - cron: '0 0 * * *' #UTC
-  push:
-    branches:
-      - 'master'
 
 jobs:
   composer:
-    uses: dmapp_ci/.github/workflows/update-composer.yml@master
+    uses: kawax/composer-workflow/.github/workflows/update.yml@v1
     secrets:
-      token: ${{ secrets.ACTION_TOKEN }}
+      token: ${{ secrets.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 }}
     with:
+      php: 8.2
+      extensions: mbstring
       git-name: thoriqhafidz12
       git-email: 111201911729@mhs.dinus.ac.id
-      composer-path: ./composer
+      composer-path: ./
       branch: master
+      title: composer update
+      commit-message: composer update
