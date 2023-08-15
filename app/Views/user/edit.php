@@ -30,13 +30,9 @@
                 <div class="form-group">
                     <div class="col-8">
                         <label >Image</label>
-                        <input type="file" class="form-control" name= "user_image" value="<?= user()->user_image; ?>">
+                        <input type="file" class="form-control" name= "user_image">
+                        <img src="<?= base_url('img/'.user()->user_image.'') ?>" alt="" ">
                     </div>
-                </div>
-
-                <div class="form-group form-check">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
                 </div>
                 <input type="submit" value="Submit" class="btn px-5 btn-primary">
             </form>

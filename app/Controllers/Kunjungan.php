@@ -4,6 +4,8 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\KunjunganModel;
+use CodeIgniter\Files\File;
+use CodeIgniter\Images\Image;
 use CodeIgniter\Exception\PageNotFoundException;
 
 class Kunjungan extends BaseController
@@ -27,16 +29,16 @@ class Kunjungan extends BaseController
    
     
 
-    public function preview($id)
-	{
-		$kunjungans = new KunjunganModel();
-		$data['kunjungans'] = $kunjungans->where('id', $id)->first();
+    // public function preview($id)
+	// {
+	// 	$kunjungans = new KunjunganModel();
+	// 	$data['kunjungans'] = $kunjungans->where('id', $id)->first();
 		
-		if(!$data['kunjungans']){
-			throw PageNotFoundException::forPageNotFound();
-		}
-		echo view('kunjungan_detail', $data);
-    }
+	// 	if(!$data['kunjungans']){
+	// 		throw PageNotFoundException::forPageNotFound();
+	// 	}
+	// 	echo view('kunjungan_detail', $data);
+    // }
 
     //--------------------------------------------------------------------------
     
@@ -51,7 +53,7 @@ class Kunjungan extends BaseController
         $data['title'] = 'Masukkan Kunjungan';
 		if (!$this->validate([
 			'gamlap' => [
-				'rules' => 'uploaded[gamlap]|mime_in[gamlap,image/jpg,image/jpeg,image/gif,image/png]|max_size[gamlap,4048]',
+				'rules' => 'uploaded[gamlap]','mime_in[gamlap,image/jpg,image/jpeg,image/gif,image/png,image/heic,image/heif]','max_size[gamlap,4048]',
 				'errors' => [
 					'uploaded' => 'Harus Ada Foto yang diupload',
 					'mime_in' => 'File Extention Harus Berupa jpg,jpeg,gif,png',
@@ -80,8 +82,9 @@ class Kunjungan extends BaseController
         $image = \Config\Services::image()
             ->withFile($datagamlap)
             ->convert(IMAGETYPE_PNG)
-            ->resize(400, 200, true, 'height')
-            ->save(FCPATH .'/img/kunjungan/'. $fileName,100);
+            ->reorient()
+            ->rotate(90)
+            ->save(FCPATH .'/img/kunjungan/'. $fileName,10);
 		// $datagamlap->move('uploads/kunjungan/', $fileName);
 		session()->setFlashdata('success', 'Terimakasih Telah Mengisi daftar kunjungan');
 		return redirect()->to(base_url('kunjungan/new'));

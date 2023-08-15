@@ -47,13 +47,15 @@
                             <input type="text" name="hasil" class="form-control" value="<?= $kunker->hasil ?>" required>
                         </div>
                         <div class="form-group">
-                            <label>Hasil</label>
-                            <input type="text" name="gamlap" class="form-control" value="<?= $kunker->gamlap ?>" required>
+                            <label>Hasil Foto</label>
+                            <input type="text" name="gamlap" class="form-control" value="<?= $kunker->gamlap ?>" hidden>
+                            
                         </div>
-                           
+                        
                             <button type="submit" name="Submit" value="published" class="btn btn-primary mb-4">SIMPAN</button>
                     </form>
                 </div>
+                <img src="<?= base_url('img/kunjungan/'.$kunker->gamlap); ?>" alt="Dokumentasi" style="width:450px"> 
             </div>
         </div>
     </div>
