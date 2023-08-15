@@ -25,7 +25,7 @@
                     <form action="<?= base_url(); ?>kredit/create" method="post" id="form-slide" enctype="multipart/form-data">
                         <div id="slide">
                             <div class="form-group">
-                                <label>Produk</label>
+                                <label>Jenis Produk Kredit</label>
                                 <div class="d-flex align-items-center justify-content-around">
                                     <input name="produk" type="text" class="form-control" required>
                                     <input type="text" class="form-control" name="id_petugas" value="<?= user()->id; ?>" hidden/>
@@ -99,6 +99,12 @@
                                 <label>Nomor KTP</label>
                                 <div class="d-flex align-items-center justify-content-around">
                                     <input name="no_ktp" type="text" class="form-control" placeholder="Sesuai KTP">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Foto KTP</label>
+                                <div class="d-flex align-items-center justify-content-around">
+                                    <input name="foto_ktp" type="file" class="form-control" required>
                                 </div>
                             </div>
                             <!-- <div class="form-group">
@@ -437,9 +443,15 @@
                         <div id="slide">
                             <h3 class="h3">Informasi Agunan</h3><hr>
                             <div class="form-group">
-                                <label>*Jika Agunan Tanah</label>
+                                <label>Keterangan Agunan</label>
                                 <div class="d-flex align-items-center justify-content-around">
                                     <input name="informasi" class="form-control" type="text">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Foto Agunan</label>
+                                <div class="d-flex align-items-center justify-content-around">
+                                    <input name="foto_agunan" class="form-control" type="file" required>
                                 </div>
                             </div>
 

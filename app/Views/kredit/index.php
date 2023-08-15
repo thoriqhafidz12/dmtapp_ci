@@ -70,15 +70,15 @@
                                 <td class="align-middle text-center"><span class="badge badge-danger">BELUM DILAKSANAKAN</span></td>  
                             <?php elseif( ($kredit->stts_pnd == 'Komite')) : ?>
                                 <td class="align-middle text-center"><?=  date('d-F-Y', strtotime($kredit->tgl_survey)) ?></td>
-                                <td class="align-middle text-center"><span class="badge badge-danger">BELUM DILAKSANAKAN</span></td> 
+                                <td class="align-middle text-center"><?=  date('d-F-Y', strtotime($kredit->tgl_komite)) ?></td>
                                 <td class="align-middle text-center"><span class="badge badge-danger">BELUM DILAKSANAKAN</span></td> 
                             <?php elseif( ($kredit->stts_pnd == 'Analisa')) : ?>
                                 <td class="align-middle text-center"><?=  date('d-F-Y', strtotime($kredit->tgl_survey)) ?></td>
-                                <td class="align-middle text-center"><?= date('d-F-Y', strtotime($kredit->tgl_komite)) ?></td>
+                                <td class="align-middle text-center"><span class="badge badge-danger">BELUM DILAKSANAKAN</span></td> 
                                 <td class="align-middle text-center"><span class="badge badge-danger">BELUM DILAKSANAKAN</span></td> 
                             <?php elseif( ($kredit->stts_pnd == 'Realisasi')) : ?>
-                                <td class="align-middle text-center"><?= date('d-F-Y', strtotime($kredit->tgl_komite))?></td> 
                                 <td class="align-middle text-center"><?= date('d-F-Y', strtotime($kredit->tgl_survey)) ?></td> 
+                                <td class="align-middle text-center"><?= date('d-F-Y', strtotime($kredit->tgl_komite))?></td> 
                                 <td class="align-middle text-center"><?= date('d-F-Y', strtotime($kredit->tgl_realisasi)) ?></td> 
                             <?php else :?>
                                 <td class="align-middle text-center"><span class="badge badge-danger">BELUM DILAKSANAKAN</span></td>
@@ -104,7 +104,7 @@
                         </td>
                         <td style="text-align:center;">
                             <a href="#" data-href="<?= base_url('kredit/'.$kredit->id.'/delete') ?>" onclick="confirmToDelete(this)" class="btn btn-danger btn-sm mb-2">Delete</a>   
-                            <?php if( in_groups('admin'))?>
+                            <?php if( in_groups('admin')):?>
                                 <?php if( ($kredit->stts_pnd == 'Pemberkasan dan Registrasi')):  ?>
                                     <a href="<?= base_url('kredit/' . $kredit->id.'/nxtSurvey'); ?>" class="btn btn-info btn-sm">Lanjut Survey</a>  
                                 <?php elseif( ($kredit->stts_pnd == 'Survey')):  ?>
@@ -113,6 +113,7 @@
                                     <a href="<?= base_url('kredit/' . $kredit->id.'/nxtKomite'); ?>" class="btn btn-secondary btn-sm">Lanjutkan Komite</a>  
                                 <?php elseif( ($kredit->stts_pnd == 'Komite')) : ?>
                                     <a href="<?= base_url('kredit/' . $kredit->id.'/nxtRealisasi'); ?>" class="btn btn-success btn-sm">Lanjutkan Realisasi</a>  
+                            <?php endif; ?>
                             <?php endif; ?>
                         </td>
                     </tr>

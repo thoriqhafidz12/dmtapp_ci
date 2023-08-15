@@ -49,16 +49,41 @@
                             </div>
                             <div class="form-group">
                                 <div class="d-flex align-items-center justify-content-around">
-                                    <?php if( in_groups('admin'))?>
+                                    <?php if( in_groups('admin')):?>
                                         <?php if( ($kredit->stts_pnd == 'Pemberkasan dan Registrasi')):  ?>
                                             <label>Tanggal Survey</label>
                                             <input type="date" placeholder="Tanggal Survey" class="form-control" name="tgl_survey" required>  
+
+                                        <?php elseif( ($kredit->stts_pnd == 'Survey')) : ?>
+                                            <label>Tanggal Survey</label>
+                                            <input type="date" class="form-control" name="tgl_survey" value="<?= $kredit->tgl_survey; ?>"  >
+                                            
                                         <?php elseif( ($kredit->stts_pnd == 'Analisa')) : ?>
-                                            <label>Tanggal Usulan & Komite</label>
-                                            <input type="date" placeholder="Tanggal Usulan dan Komite" class="form-control" name="tgl_komite" required> 
+                                            <label>Tanggal Survey</label>
+                                            <input type="date" class="form-control" name="tgl_survey" value="<?= $kredit->tgl_survey; ?>">
+                                            </div>
+                                            </div>
+                                        <div class="form-group">
+                                            <div class="d-flex align-items-center justify-content-around">
+                                            <label>Tanggal Komite</label>
+                                            <input type="date" class="form-control" name="tgl_komite" required>
+
                                         <?php elseif( ($kredit->stts_pnd == 'Komite')) : ?>
+                                            <label>Tanggal Survey</label>
+                                            <input type="date" class="form-control" name="tgl_survey" value="<?= $kredit->tgl_survey; ?>">
+                                            </div>
+                                            </div>
+                                        <div class="form-group">
+                                            <div class="d-flex align-items-center justify-content-around">
+                                            <label>Tanggal Komite</label>
+                                            <input type="date" class="form-control" name="tgl_komite" value="<?= $kredit->tgl_komite; ?>">
+                                        </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="d-flex align-items-center justify-content-around">
                                             <label>Tanggal Realisasi</label>
                                             <input type="date" placeholder="Tanggal Realisasi" class="form-control" name="tgl_realisasi" required>  
+                                    <?php endif; ?>
                                     <?php endif; ?>
                                 </div>
                             </div>
@@ -130,6 +155,13 @@
                                 <label>Nomor KTP</label>
                                 <div class="d-flex align-items-center justify-content-around">
                                     <input name="no_ktp" type="text" class="form-control" placeholder="Sesuai KTP" value="<?= $kredit->no_ktp; ?>">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Foto KTP</label>
+                                <div class="d-flex align-items-center justify-content-around">
+                                    <input name="foto_ktp" class="form-control" type="text" hidden value="<?= $kredit->foto_ktp; ?>">
+                                    <img src="<?= base_url('img/ktp/'.$kredit->foto_ktp.'') ?>" alt="" style="width: 120px;">
                                 </div>
                             </div>
                             <!-- <div class="form-group">
@@ -470,12 +502,18 @@
                         <div id="slide">
                             <h3 class="h3">Informasi Agunan</h3><hr>
                             <div class="form-group">
-                                <label>*Jika Agunan Tanah</label>
+                                <label>Informasi Agunan</label>
                                 <div class="d-flex align-items-center justify-content-around">
                                     <input name="informasi" class="form-control" type="text" value="<?= $kredit->informasi; ?>">
                                 </div>
                             </div>
-
+                            <div class="form-group">
+                                <label>Foto Agunan</label>
+                                <div class="d-flex align-items-center justify-content-around">
+                                    <input name="foto_agunan" class="form-control" type="text" hidden value="<?= $kredit->foto_agunan; ?>">
+                                    <img src="<?= base_url('img/agunan/'.$kredit->foto_agunan.'') ?>" alt="" style="width: 120px;">
+                                </div>
+                            </div>
                             <div class="float-right">
                                 <button type="button" class="btn btn-secondary" id="btn-before">Back</button>
                                 <button type="button" class="btn btn-primary" id="btn-next">Next</button>

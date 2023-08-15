@@ -111,16 +111,36 @@ class Kredit extends BaseController
 					'mime_in' => 'File Extention Harus Berupa jpg,jpeg,gif,png',
 					'max_size' => 'Ukuran Foto Maksimal 4 MB'
 				]
+            ],
+            'foto_ktp' => [
+				'rules' => 'uploaded[foto_ktp]|mime_in[foto_ktp,image/jpg,image/jpeg,image/gif,image/png]|max_size[foto_ktp,4048]',
+				'errors' => [
+					'uploaded' => 'Harus Ada Foto yang diupload',
+					'mime_in' => 'File Extention Harus Berupa jpg,jpeg,gif,png',
+					'max_size' => 'Ukuran Foto Maksimal 4 MB'
+				]
+            ],
+            'foto_agunan' => [
+				'rules' => 'uploaded[foto_agunan]|mime_in[foto_agunan,image/jpg,image/jpeg,image/gif,image/png]|max_size[foto_agunan,4048]',
+				'errors' => [
+					'uploaded' => 'Harus Ada Foto yang diupload',
+					'mime_in' => 'File Extention Harus Berupa jpg,jpeg,gif,png',
+					'max_size' => 'Ukuran Foto Maksimal 4 MB'
+				]
 			]
         ]);
         
         $ttd_petugas = $this->request->getFile('ttd_petugas');
         $ttd_slick = $this->request->getFile('ttd_slick');
         $ttd_daftar = $this->request->getFile('ttd_daftar');
+        $foto_ktp = $this->request->getFile('foto_ktp');
+        $foto_agunan = $this->request->getFile('foto_agunan');
 
         $daftar=$ttd_daftar->getRandomName();
         $petugas=$ttd_petugas->getRandomName();
         $slick=$ttd_slick->getRandomName();
+        $ktp=$foto_ktp->getRandomName();
+        $agunan=$foto_agunan->getRandomName();
 
         $isDataValid = $validation->withRequest($this->request)->run();
         // jika data vlid, maka simpan ke database
@@ -140,6 +160,7 @@ class Kredit extends BaseController
                 "nama_pang" => $this->request->getPost('nama_pang'),
                 "ttl1" => $this->request->getPost('ttl1'),
                 "no_ktp" => $this->request->getPost('no_ktp'),
+                "foto_ktp" => $ktp,
                 "nama_ibu" => $this->request->getPost('nama_ibu'),
                 "pend_ter" => $this->request->getPost('pend_ter'),
                 "profesi" => $this->request->getPost('profesi'),
@@ -187,6 +208,7 @@ class Kredit extends BaseController
                 "omset" => $this->request->getPost('omset'),
                 "laba" => $this->request->getPost('laba'),
                 "informasi" => $this->request->getPost('informasi'),
+                "foto_agunan" => $agunan,
                 "tujuan" => $this->request->getPost('tujuan'),
                 "angsuran" => $this->request->getPost('angsuran'),
                 "takover" => $this->request->getPost('takover'),
@@ -210,6 +232,14 @@ class Kredit extends BaseController
                 ->convert(IMAGETYPE_PNG)
                 ->resize(200, 100, true, 'width')
                 ->save(FCPATH .'/img/ttd/slick/'. $slick,100);
+            $image3 = \Config\Services::image()
+                ->withFile($foto_ktp)
+                ->convert(IMAGETYPE_PNG)
+                ->save(FCPATH .'/img/ktp/'. $ktp,100);
+            $image4 = \Config\Services::image()
+                ->withFile($foto_agunan)
+                ->convert(IMAGETYPE_PNG)
+                ->save(FCPATH .'/img/agunan/'. $agunan,100);
                 // Redirect View
             return redirect('kredit/pendaftaran');
         }
@@ -249,6 +279,7 @@ class Kredit extends BaseController
                 "nama_pang" => $this->request->getPost('nama_pang'),
                 "ttl1" => $this->request->getPost('ttl1'),
                 "no_ktp" => $this->request->getPost('no_ktp'),
+                "foto_ktp" => $this->request->getPost('foto_ktp'),
                 "nama_ibu" => $this->request->getPost('nama_ibu'),
                 "pend_ter" => $this->request->getPost('pend_ter'),
                 "profesi" => $this->request->getPost('profesi'),
@@ -296,6 +327,7 @@ class Kredit extends BaseController
                 "omset" => $this->request->getPost('omset'),
                 "laba" => $this->request->getPost('laba'),
                 "informasi" => $this->request->getPost('informasi'),
+                "foto_agunan" => $this->request->getPost('foto_agunan'),
                 "tujuan" => $this->request->getPost('tujuan'),
                 "angsuran" => $this->request->getPost('angsuran'),
                 "takover" => $this->request->getPost('takover'),
@@ -342,6 +374,7 @@ class Kredit extends BaseController
                 "nama_pang" => $this->request->getPost('nama_pang'),
                 "ttl1" => $this->request->getPost('ttl1'),
                 "no_ktp" => $this->request->getPost('no_ktp'),
+                "foto_tkp" => $this->request->getPost('foto_tkp'),
                 "nama_ibu" => $this->request->getPost('nama_ibu'),
                 "pend_ter" => $this->request->getPost('pend_ter'),
                 "profesi" => $this->request->getPost('profesi'),
@@ -389,6 +422,7 @@ class Kredit extends BaseController
                 "omset" => $this->request->getPost('omset'),
                 "laba" => $this->request->getPost('laba'),
                 "informasi" => $this->request->getPost('informasi'),
+                "foto_agunan" => $this->request->getPost('foto_agunan'),
                 "tujuan" => $this->request->getPost('tujuan'),
                 "angsuran" => $this->request->getPost('angsuran'),
                 "takover" => $this->request->getPost('takover'),
@@ -434,6 +468,7 @@ class Kredit extends BaseController
                 "nama_pang" => $this->request->getPost('nama_pang'),
                 "ttl1" => $this->request->getPost('ttl1'),
                 "no_ktp" => $this->request->getPost('no_ktp'),
+                "foto_ktp" => $this->request->getPost('foto_ktp'),
                 "nama_ibu" => $this->request->getPost('nama_ibu'),
                 "pend_ter" => $this->request->getPost('pend_ter'),
                 "profesi" => $this->request->getPost('profesi'),
@@ -481,6 +516,7 @@ class Kredit extends BaseController
                 "omset" => $this->request->getPost('omset'),
                 "laba" => $this->request->getPost('laba'),
                 "informasi" => $this->request->getPost('informasi'),
+                "foto_agunan" => $this->request->getPost('foto_agunan'),
                 "tujuan" => $this->request->getPost('tujuan'),
                 "angsuran" => $this->request->getPost('angsuran'),
                 "takover" => $this->request->getPost('takover'),
@@ -527,6 +563,7 @@ class Kredit extends BaseController
                 "nama_pang" => $this->request->getPost('nama_pang'),
                 "ttl1" => $this->request->getPost('ttl1'),
                 "no_ktp" => $this->request->getPost('no_ktp'),
+                "foto_ktp" => $this->request->getPost('foto_ktp'),
                 "nama_ibu" => $this->request->getPost('nama_ibu'),
                 "pend_ter" => $this->request->getPost('pend_ter'),
                 "profesi" => $this->request->getPost('profesi'),
@@ -574,6 +611,7 @@ class Kredit extends BaseController
                 "omset" => $this->request->getPost('omset'),
                 "laba" => $this->request->getPost('laba'),
                 "informasi" => $this->request->getPost('informasi'),
+                "foto_agunan" => $this->request->getPost('foto_agunan'),
                 "tujuan" => $this->request->getPost('tujuan'),
                 "angsuran" => $this->request->getPost('angsuran'),
                 "takover" => $this->request->getPost('takover'),
@@ -621,6 +659,7 @@ class Kredit extends BaseController
                 "nama_pang" => $this->request->getPost('nama_pang'),
                 "ttl1" => $this->request->getPost('ttl1'),
                 "no_ktp" => $this->request->getPost('no_ktp'),
+                "foto_ktp" => $this->request->getPost('foto_ktp'),
                 "nama_ibu" => $this->request->getPost('nama_ibu'),
                 "pend_ter" => $this->request->getPost('pend_ter'),
                 "profesi" => $this->request->getPost('profesi'),
@@ -668,6 +707,7 @@ class Kredit extends BaseController
                 "omset" => $this->request->getPost('omset'),
                 "laba" => $this->request->getPost('laba'),
                 "informasi" => $this->request->getPost('informasi'),
+                "foto_agunan" => $this->request->getPost('foto_agunan'),
                 "tujuan" => $this->request->getPost('tujuan'),
                 "angsuran" => $this->request->getPost('angsuran'),
                 "takover" => $this->request->getPost('takover'),

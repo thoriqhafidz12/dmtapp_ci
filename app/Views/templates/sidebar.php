@@ -53,7 +53,7 @@
             </div>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item" >
             <a class="nav-link" href="<?= base_url('kunjungan/new'); ?>">
                 <i class="fas fa-duotone fa-handshake"></i>
                 <span>Kunjungan Petugas</span></a>
@@ -64,7 +64,7 @@
                 <i class="fas fa-money-check-alt"></i>  
                 <span>Pendaftaran Kredit</span></a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" >
             <a class="nav-link" href="#">
             <i class="fas fa-chart-bar"></i>
                 <span>Simulasi Kredit</span></a>
@@ -79,7 +79,7 @@
         </div>
         <!-- Nav Item - Tables -->
         
-        <li class="nav-item">
+        <li class="nav-item" >
             <a class="nav-link" href="<?= base_url('kunjungan'); ?>">
                 <i class="fas fa-thin fa-layer-group"></i>
                 <span>Riwayat Kunjungan</span></a>

@@ -122,7 +122,7 @@
           <td>Usaha </td>
           <td>: <?= $kredit->usaha ?></td>
           <td>No NPWP</td>
-          <td>: <?= $kredit->npnw?></td>
+          <td>: <?= $kredit->npwp ?></td>
         </tr>
         <tr>
           <td>Status Kawin</td>
@@ -160,7 +160,7 @@
         <tr>
           <td>No KTP</td>
           <td>: <?= $kredit->no_ktp2?></td>
-          <td>*Jika Agunan Tanah</td>
+          <td>Informasi Agunan</td>
           <td >: <?= $kredit->informasi?></td>
         </tr>
         <tr>
@@ -175,10 +175,7 @@
           <td>Pendidikan Terakhir</td>
           <td>: <?= $kredit->pend_ter2?></td>
         </tr>
-        <tr>
-          <td>Jenis Kelamin</td>
-          <td>: <?= $kredit->jenis_pas?></td>
-        </tr>
+        
         <tr>
           <td>Profesi</td>
           <td>: <?= $kredit->profesi2?></td>
@@ -328,6 +325,14 @@
   </p>
   <p style="text-align:center;">
   ( <?= $kredit->nama_pem; ?> )
+  </p>
+  
+  <!-- HALAMAN AGUNAN DAN KTP -->
+  <div style = "display:block; clear:both; page-break-after:always; ">
+  </div>
+  <p style="text-align:center;">
+    <img src="data:image/jpeg;base64,<?= base64_encode(file_get_contents('./img/ktp/' . $kredit->foto_ktp)) ?>" alt="" style="width: 500px;">
+    <img src="data:image/jpeg;base64,<?= base64_encode(file_get_contents('./img/agunan/' . $kredit->foto_agunan)) ?>" alt="" style="width: 500px;">
   </p>
 </body>
 </html>

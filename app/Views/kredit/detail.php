@@ -26,7 +26,9 @@
                             <li class="list-group-item list-group-item-primary col-md-6 offset-md-3">Produk : <?= $kredit->produk; ?></li>
                             <li class="list-group-item list-group-item-primary col-md-6 offset-md-3">Petugas : <?= $kredit->nama_petugas; ?></li>
                             <li class="list-group-item list-group-item-primary col-md-6 offset-md-3">Proses Pendaftaran : <?= $kredit->proses; ?></li>
-                            <li class="list-group-item list-group-item-primary col-md-6 offset-md-3">Status Pendaftaran : <?= $kredit->status; ?></li>
+                            <li class="list-group-item list-group-item-primary col-md-6 offset-md-3">Status Pendaftaran : <?= $kredit->status; ?></li><br>
+                            <li  class="list-group-item list-group-item-primary col-md-6 offset-md-3"><div class="col mb-2"><img src="<?= base_url('img/ktp/'.$kredit->foto_ktp.'') ?>" alt="" style="width: 400px;"></div></li>
+                            <li  class="list-group-item list-group-item-primary col-md-6 offset-md-3"><div class="col mb-2"><img src="<?= base_url('img/agunan/'.$kredit->foto_agunan.'') ?>" alt="" style="width: 400px;"></div></li>
                         </ul>
                     </div>
                 </div>
