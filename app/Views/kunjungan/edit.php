@@ -49,13 +49,11 @@
                         <div class="form-group">
                             <label>Hasil Foto</label>
                             <input type="text" name="gamlap" class="form-control" value="<?= $kunker->gamlap ?>" hidden>
-                            
                         </div>
-                        
-                            <button type="submit" name="Submit" value="published" class="btn btn-primary mb-4">SIMPAN</button>
+                        <button type="submit" name="Submit" value="published" class="btn btn-primary mb-4">SIMPAN</button>
                     </form>
                 </div>
-                <img src="<?= base_url('img/kunjungan/'.$kunker->gamlap); ?>" alt="Dokumentasi" style="width:450px"> 
+                <img src="<?= $kunker->gamlap ?>" alt="Dokumentasi" style="width:450px"> 
             </div>
         </div>
     </div>

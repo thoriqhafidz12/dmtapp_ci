@@ -51,44 +51,50 @@ class Kunjungan extends BaseController
     public function save()
 	{
         $data['title'] = 'Masukkan Kunjungan';
-		if (!$this->validate([
-			'gamlap' => [
-				'rules' => 'uploaded[gamlap]','mime_in[gamlap,image/jpg,image/jpeg,image/gif,image/png,image/heic,image/heif]','max_size[gamlap,4048]',
-				'errors' => [
-					'uploaded' => 'Harus Ada Foto yang diupload',
-					'mime_in' => 'File Extention Harus Berupa jpg,jpeg,gif,png',
-					'max_size' => 'Ukuran Foto Maksimal 4 MB'
-				]
-			]
-		])) 
-        {
-			session()->setFlashdata('error', $this->validator->listErrors());
-			return redirect()->back()->withInput();
-		}
 
-		$datagamlap = $this->request->getFile('gamlap');
+        if (!$this->validate([
+            'gamlap' => [
+                'rules' => 'uploaded[gamlap]|mime_in[gamlap,image/jpg,image/jpeg,image/gif,image/png,image/heic,image/heif]|max_size[gamlap,4048]',
+                'errors' => [
+                    'uploaded' => 'Harus Ada Foto yang diupload',
+                    'mime_in' => 'File Extention Harus Berupa jpg,jpeg,gif,png',
+                    'max_size' => 'Ukuran Foto Maksimal 4 MB'
+                ]
+            ]
+        ])) {
+            session()->setFlashdata('error', $this->validator->listErrors());
+            return redirect()->back()->withInput();
+        }
         
-		$fileName = $datagamlap->getRandomName();
-		$this->kunjungan->insert([
+        $datagamlap = $this->request->getFile('gamlap');
+        
+        // Mendapatkan tipe MIME
+        $mimeType = $datagamlap->getMimeType();
+        
+        // Membaca konten file gambar
+        $imageData = file_get_contents($datagamlap->getTempName());
+        
+        // Mengonversi ke Base64
+        $base64Image = base64_encode($imageData);
+        
+        // Membuat string data URI
+        $dataUri = "data:{$mimeType};base64,{$base64Image}";
+        
+        // Menyimpan data ke database
+        $data = $this->kunjungan->insert([
             "id_petugas" => $this->request->getPost('id_petugas'),
-			"tanggal_bertamu" => $this->request->getPost('tanggal_bertamu'),
+            "tanggal_bertamu" => $this->request->getPost('tanggal_bertamu'),
             "nama_petugas" => $this->request->getPost('nama_petugas'),
             "nama_debitur" => $this->request->getPost('nama_debitur'),
             "alamat" => $this->request->getPost('alamat'),
             "tujuan" => $this->request->getPost('tujuan'),
             "hasil" => $this->request->getPost('hasil'),
-            'gamlap' => $fileName
-		]);
-        $image = \Config\Services::image()
-            ->withFile($datagamlap)
-            ->convert(IMAGETYPE_PNG)
-            ->reorient()
-            ->rotate(90)
-            ->save(FCPATH .'/img/kunjungan/'. $fileName,10);
-		// $datagamlap->move('uploads/kunjungan/', $fileName);
-		session()->setFlashdata('success', 'Terimakasih Telah Mengisi daftar kunjungan');
-		return redirect()->to(base_url('kunjungan/new'));
-
+            'gamlap' => $dataUri // Simpan string data URI ke dalam kolom 'gamlap'
+        ]);
+        // var_dump($dataUri);
+        session()->setFlashdata('success', 'Terimakasih Telah Mengisi daftar kunjungan');
+        return redirect()->to(base_url('kunjungan/new'));
+        
         
 	}
 
